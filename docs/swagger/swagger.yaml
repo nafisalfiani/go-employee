@@ -1,0 +1,177 @@
+basePath: /
+definitions:
+  model.Employee:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      team_name:
+        type: string
+    type: object
+  model.HTTPMessage:
+    properties:
+      body:
+        type: string
+      title:
+        type: string
+    type: object
+  model.HTTPResp:
+    properties:
+      data: {}
+      error:
+        type: string
+      message:
+        $ref: '#/definitions/model.HTTPMessage'
+      pagination:
+        $ref: '#/definitions/model.Pagination'
+    type: object
+  model.Pagination:
+    properties:
+      curent_page:
+        type: integer
+      total_element:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: nafisa.alfiani.ica@gmail.com
+    name: Nafisa Alfiani
+  description: API Collection for Employee Service
+  title: Employee Service
+  version: "1.0"
+paths:
+  /:
+    get:
+      description: Will return hello message if the server is up
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+      summary: Check server status
+      tags:
+      - Hello
+  /employee:
+    get:
+      description: This API will get all existing employee
+      parameters:
+      - description: page count
+        in: query
+        name: page
+        type: integer
+      - description: page size
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+      summary: Get all existing employee
+      tags:
+      - Employee
+    patch:
+      consumes:
+      - application/json
+      description: This API will update existing employee
+      parameters:
+      - description: Employee Data
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/model.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+      summary: Update existing employee
+      tags:
+      - Employee
+    post:
+      consumes:
+      - application/json
+      description: This API will create new employee
+      parameters:
+      - description: Employee Data
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/model.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+      summary: Create new employee
+      tags:
+      - Employee
+  /employee/{id}:
+    delete:
+      description: This API will delete employee data with given id
+      parameters:
+      - description: Employee Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+      summary: Delete existing employee by id
+      tags:
+      - Employee
+    get:
+      description: This API will get existing employee with given id
+      parameters:
+      - description: Employee Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPResp'
+      summary: Get existing employee by id
+      tags:
+      - Employee
+swagger: "2.0"
